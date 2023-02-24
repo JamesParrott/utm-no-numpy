@@ -1,14 +1,13 @@
 name: CI
 
-on:
-  push, workflow_dispatch :
-    branches:
-      - main
-    tags:
-      - "v*"
-  # pull_request:
-  # schedule:
-  #   - cron: '0 3 * * *' # daily, at 3am
+on: [push, workflow_dispatch]
+  branches:
+    - main
+  tags:
+    - "v*"
+# pull_request:
+# schedule:
+#   - cron: '0 3 * * *' # daily, at 3am
 
 jobs:
   tests:
