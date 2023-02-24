@@ -1,4 +1,4 @@
-utm-no-numpy
+utm_no_numpy
 ===
 
 Bidirectional UTM-WGS84 converter for python
