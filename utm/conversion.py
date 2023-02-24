@@ -1,14 +1,8 @@
 from __future__ import division
 from utm.error import OutOfRangeError
 
-# For most use cases in this module, numpy is indistinguishable
-# from math, except it also works on numpy arrays
-try:
-    import numpy as mathlib
-    use_numpy = True
-except ImportError:
-    import math as mathlib
-    use_numpy = False
+import math as mathlib
+use_numpy = False
 
 __all__ = ['to_latlon', 'from_latlon']
 
