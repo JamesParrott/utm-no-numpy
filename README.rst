@@ -3,7 +3,7 @@ utm-no-numpy
 
 Bidirectional UTM-WGS84 converter for python.  
 
-Utm optionally requires numpy, but in Pythonic EAFFTP style, always attempts to import it even when it 
+Utm optionally requires numpy, but in Pythonic EAFP style, always attempts to import it even when it 
 is not installed.  Utm itself is otherwise a pure Python package, and is also popular in 
 environments (e.g. Rhino/Grasshopper) that do not support C extensions such as numpy.  It even
 already has alternative code to use when numpy cannot be imported.
@@ -90,6 +90,7 @@ Authors
 * Bart van Andel <bavanandel@gmail.com>
 * Tobias Bieniek <Tobias.Bieniek@gmx.de>
 * Torstein I. Bø
+* James Parrott (utm-no-numpy project description only).
 
 License
 -------
