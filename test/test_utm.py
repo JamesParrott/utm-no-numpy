@@ -1,31 +1,22 @@
 from __future__ import division
 
-import utm as UTM
+import utm_no_numpy as UTM
 
 import pytest
 
 
-use_numpy = False
-
-
 def assert_utm_equal(a, b):
-    if use_numpy and isinstance(b[0], np.ndarray):
-        assert np.allclose(a[0], b[0])
-        assert np.allclose(a[1], b[1])
-    else:
-        assert a[0] == pytest.approx(b[0], abs=1)
-        assert a[1] == pytest.approx(b[1], abs=1)
+
+    assert a[0] == pytest.approx(b[0], abs=1)
+    assert a[1] == pytest.approx(b[1], abs=1)
     assert a[2] == b[2]
     assert a[3].upper() == b[3].upper()
 
 
 def assert_latlon_equal(a, b):
-    if use_numpy and isinstance(b[0], np.ndarray):
-        assert np.allclose(a[0], b[0], rtol=1e-4, atol=1e-4)
-        assert np.allclose(a[1], b[1], rtol=1e-4, atol=1e-4)
-    else:
-        assert a[0] == pytest.approx(b[0], 4)
-        assert a[1] == pytest.approx(b[1], 4)
+
+    assert a[0] == pytest.approx(b[0], 4)
+    assert a[1] == pytest.approx(b[1], 4)
 
 
 known_values = [

@@ -1,5 +1,5 @@
 from __future__ import division
-from utm.error import OutOfRangeError
+from .error import OutOfRangeError
 
 import math as mathlib
 
