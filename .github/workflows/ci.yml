@@ -18,11 +18,11 @@ jobs:
       matrix:
         python-version:
           - "3.9"
-          - "3.8"
-          - "3.7"
-          - "3.6"
-          - "3.5"
-          - "2.7"
+        #  - "3.8"
+        #  - "3.7"
+        #  - "3.6"
+        #  - "3.5"
+        #  - "2.7"
 
 
     name: "Tests (Python v${{ matrix.python-version }}"
@@ -34,13 +34,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - run: pip install --upgrade pip
+
       - run: pip install -r requirements.txt
 
       - run: pytest -v --cov=utm --color=yes
 
   release:
     needs: tests
-    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'push' # && startsWith(github.ref, 'refs/tags')) || github.event_name == 'workflow_dispatch'
 
     name: Release
     runs-on: ubuntu-latest
