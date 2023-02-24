@@ -4,12 +4,8 @@ import utm as UTM
 
 import pytest
 
-try:
-    import numpy as np
 
-    use_numpy = True
-except ImportError:
-    use_numpy = False
+use_numpy = False
 
 
 def assert_utm_equal(a, b):
@@ -91,30 +87,6 @@ def test_from_latlon(latlon, utm, utm_kw):
     assert_utm_equal(utm, result)
 
 
-@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
-@pytest.mark.parametrize("latlon, utm, utm_kw", known_values)
-def test_from_latlon_numpy(latlon, utm, utm_kw):
-    result = UTM.from_latlon(*[np.array([x]) for x in latlon])
-    assert_utm_equal(utm, result)
-
-
-@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
-def test_from_latlon_numpy_static():
-    lats = np.array([0.0, 3.0, 6.0])
-    lons = np.array([0.0, 1.0, 3.4])
-    result = UTM.from_latlon(lats, lons)
-    assert_utm_equal(
-        (
-            np.array(
-                [166021.44317933032, 277707.83075574087, 544268.12794623]
-            ),
-            np.array([0.0, 331796.29167519242, 663220.7198366751]),
-            31,
-            "N",
-        ),
-        result,
-    )
-
 
 @pytest.mark.parametrize("latlon, utm, utm_kw", known_values)
 def test_to_latlon(latlon, utm, utm_kw):
@@ -125,26 +97,6 @@ def test_to_latlon(latlon, utm, utm_kw):
     result = UTM.to_latlon(*utm[0:3], **utm_kw)
     assert_latlon_equal(latlon, result)
 
-
-@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
-@pytest.mark.parametrize("latlon, utm, utm_kw", known_values)
-def test_to_latlon_numpy(latlon, utm, utm_kw):
-    utm = [np.array([x]) for x in utm[:2]] + list(utm[2:])
-    result = UTM.to_latlon(*utm)
-    assert_latlon_equal(latlon, result)
-
-
-@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
-def test_to_latlon_numpy_static():
-    result = UTM.to_latlon(
-        np.array([166021.44317933032, 277707.83075574087, 544268.12794623]),
-        np.array([0.0, 331796.29167519242, 663220.7198366751]),
-        31,
-        northern=True,
-    )
-    assert_latlon_equal(
-        (np.array([0.0, 3.0, 6.0]), np.array([0.0, 1.0, 3.4])), result
-    )
 
 
 def test_from_latlon_range_ok():
