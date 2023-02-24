@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  [push, workflow_dispatch]
+  push:
     branches:
       - main
     tags:
@@ -9,6 +9,7 @@ on:
   # pull_request:
   # schedule:
   #   - cron: '0 3 * * *' # daily, at 3am
+  workflow_dispatch:
 
 jobs:
   tests:
