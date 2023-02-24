@@ -3,7 +3,7 @@
 from __future__ import print_function
 
 import argparse
-import utm
+import utm_no_numpy as utm
 
 parser = argparse.ArgumentParser(description='Bidirectional UTM-WGS84 converter for python')
 subparsers = parser.add_subparsers()
