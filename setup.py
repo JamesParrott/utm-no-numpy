@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup #type: ignore
 
 from utm_no_numpy._version import __version__
 
