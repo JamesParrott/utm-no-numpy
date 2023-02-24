@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v0.7.1
+------
+* Drop numpy support
+
 v0.7.0
 ------
 
