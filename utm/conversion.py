@@ -2,7 +2,6 @@ from __future__ import division
 from utm.error import OutOfRangeError
 
 import math as mathlib
-use_numpy = False
 
 __all__ = ['to_latlon', 'from_latlon']
 
@@ -36,12 +35,8 @@ ZONE_LETTERS = "CDEFGHJKLMNPQRSTUVWXX"
 
 
 def in_bounds(x, lower, upper, upper_strict=False):
-    if upper_strict and use_numpy:
-        return lower <= mathlib.min(x) and mathlib.max(x) < upper
-    elif upper_strict and not use_numpy:
+    if upper_strict:
         return lower <= x < upper
-    elif use_numpy:
-        return lower <= mathlib.min(x) and mathlib.max(x) <= upper
     return lower <= x <= upper
 
 
@@ -56,13 +51,7 @@ def check_valid_zone(zone_number, zone_letter):
             raise OutOfRangeError('zone letter out of range (must be between C and X)')
 
 
-def mixed_signs(x):
-    return use_numpy and mathlib.min(x) < 0 and mathlib.max(x) >= 0
-
-
 def negative(x):
-    if use_numpy:
-        return mathlib.max(x) < 0
     return x < 0
 
 
@@ -76,10 +65,10 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
         Parameters
         ----------
-        easting: int or NumPy array
+        easting: int
             Easting value of UTM coordinates
 
-        northing: int or NumPy array
+        northing: int
             Northing value of UTM coordinates
 
         zone_number: int
@@ -98,10 +87,10 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
         Returns
         -------
-        latitude: float or NumPy array
+        latitude: float
             Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
 
-        longitude: float or NumPy array
+        longitude: float
             Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
 
 
@@ -186,10 +175,10 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
 
         Parameters
         ----------
-        latitude: float or NumPy array
+        latitude: float
             Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
 
-        longitude: float or NumPy array
+        longitude: float
             Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
 
         force_zone_number: int
@@ -203,10 +192,10 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
 
         Returns
         -------
-        easting: float or NumPy array
+        easting: float
             Easting value of UTM coordinates
 
-        northing: float or NumPy array
+        northing: float
             Northing value of UTM coordinates
 
         zone_number: int
@@ -272,19 +261,14 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
                                         a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
                                         a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
 
-    if mixed_signs(latitude):
-        raise ValueError("latitudes must all have the same sign")
-    elif negative(latitude):
+    if negative(latitude):
         northing += 10000000
 
     return easting, northing, zone_number, zone_letter
 
 
 def latitude_to_zone_letter(latitude):
-    # If the input is a numpy array, just use the first element
     # User responsibility to make sure that all points are in one zone
-    if use_numpy and isinstance(latitude, mathlib.ndarray):
-        latitude = latitude.flat[0]
 
     if -80 <= latitude <= 84:
         return ZONE_LETTERS[int(latitude + 80) >> 3]
@@ -293,13 +277,7 @@ def latitude_to_zone_letter(latitude):
 
 
 def latlon_to_zone_number(latitude, longitude):
-    # If the input is a numpy array, just use the first element
     # User responsibility to make sure that all points are in one zone
-    if use_numpy:
-        if isinstance(latitude, mathlib.ndarray):
-            latitude = latitude.flat[0]
-        if isinstance(longitude, mathlib.ndarray):
-            longitude = longitude.flat[0]
 
     if 56 <= latitude < 64 and 3 <= longitude < 12:
         return 32

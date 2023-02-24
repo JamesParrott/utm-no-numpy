@@ -3,7 +3,7 @@ Changelog
 
 v0.7.1
 ------
-* Drop numpy support
+* Drop numpy support - JP
 
 v0.7.0
 ------
