@@ -1,7 +1,18 @@
 utm-no-numpy
 ============
 
-Bidirectional UTM-WGS84 converter for python
+Bidirectional UTM-WGS84 converter for python.  
+
+Utm optionally requires numpy, but in Pythonic EAFFTP style, always attempts to import it even when it 
+is not installed.  Utm itself is otherwise a pure Python package, and is also popular in 
+environments (e.g. Rhino/Grashopper) that do not support C extensions such as numpy.  It even
+already has alternative code to use when numpy cannot be imported.
+
+In one of those environments the multitude of user plug-ins, the ad-hoc import system, and the design
+of 3rd party plug-ins, can easily cause dependency conflicts.  One such plug-in added a directory 
+of CPython 3 C extensions, including numpy, to IronPython 2.7's sys.path, causing the normal utm to crash.
+
+This fork of utm does not try to fix the world; it simply removes utm's attempt to import numpy.
 
 Usage
 -----
