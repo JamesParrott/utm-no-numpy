@@ -51,6 +51,10 @@ jobs:
         with:
           python-version: 3.9
 
+      - run: pip install --upgrade pip
+
+      - run: pip install setuptools
+
       - run: python setup.py sdist
 
       - uses: pypa/gh-action-pypi-publish@v1.5.1
