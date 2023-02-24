@@ -5,7 +5,7 @@ Bidirectional UTM-WGS84 converter for python.
 
 Utm optionally requires numpy, but in Pythonic EAFFTP style, always attempts to import it even when it 
 is not installed.  Utm itself is otherwise a pure Python package, and is also popular in 
-environments (e.g. Rhino/Grashopper) that do not support C extensions such as numpy.  It even
+environments (e.g. Rhino/Grasshopper) that do not support C extensions such as numpy.  It even
 already has alternative code to use when numpy cannot be imported.
 
 In one of those environments the multitude of user plug-ins, the ad-hoc import system, and the design
@@ -19,7 +19,7 @@ Usage
 
 .. code-block:: python
 
-  >>> import utm
+  >>> import utm_no_numpy as utm
 
 Latitude/Longitude to UTM
 ^^^^^^^^^^^^^^^^^^^^^^^^^
